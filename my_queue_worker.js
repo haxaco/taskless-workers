@@ -9,6 +9,11 @@ admin.initializeApp({
   databaseURL: 'https://taskless-dev.firebaseio.com'
 });
 
+var express = require('express');
+var app     = express();
+app.set('port', (process.env.PORT || 5000));
+
+
 var ref = admin.database().ref('orders');
 var queue = new Queue(ref, function(data, progress, resolve, reject) {
   // Read and process task data
@@ -25,5 +30,15 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
   setTimeout(function() {
     console.log('finishing task');
     resolve();
-  }, 1000);
+  }, 10000);
+});
+
+
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running';
+    response.send(result);
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
 });

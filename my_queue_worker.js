@@ -14,7 +14,7 @@ var app     = express();
 app.set('port', (process.env.PORT || 5000));
 
 
-var ref = admin.database().ref('orders');
+var ref = admin.database().ref('work-queue');
 var queue = new Queue(ref, function(data, progress, resolve, reject) {
   // Read and process task data
   console.log(data);

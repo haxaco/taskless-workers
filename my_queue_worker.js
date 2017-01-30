@@ -2,6 +2,7 @@
 var express = require('express');
 var Queue = require('firebase-queue');
 var admin = require('firebase-admin');
+var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 var helper = require('sendgrid').mail;
 //firebase creds
 var serviceAccount = require('./admin-sdk.json');
@@ -57,10 +58,6 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
   //   resolve();
   // }, 10000);
 });
-
-
-
-
 
 
 

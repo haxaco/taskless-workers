@@ -2,9 +2,9 @@
   "name": "taskless-node",
   "version": "1.0.0",
   "description": "node server for interaction with taskless firebase",
-  "main": "index.js",
+  "main": "my_queue_worker.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node my_queue_worker.js"
   },
   "author": "Diego Garcia",
   "license": "ISC",

@@ -1,0 +1,16 @@
+{
+  "name": "taskless-node",
+  "version": "1.0.0",
+  "description": "node server for interaction with taskless firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego Garcia",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^3.6.7",
+    "firebase-admin": "^4.0.6",
+    "firebase-queue": "^1.6.1"
+  }
+}

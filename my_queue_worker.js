@@ -1,4 +1,8 @@
 // my_queue_worker.js
+
+const WELCOME_TMPL = '6463a6c6-9a46-4af3-b20a-f615610066ca';
+const TASK_CONFIRM_TMPL = '6c48dccf-18a8-4907-9201-6a3cb5bdd1ef';
+
 var express = require('express');
 var Queue = require('firebase-queue');
 var admin = require('firebase-admin');
@@ -25,11 +29,27 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
 
     var content = new helper.Content('text/plain', JSON.stringify(data));
     
-    var from_email = new helper.Email('haxaco@taskless.com');
+    var from_email = new helper.Email('admin@taskless.com');
     var to_email = new helper.Email(data.recipient);
+
     var subject = 'Hello World from the SendGrid Node.js Library!';
 
     var mail = new helper.Mail(from_email, subject, to_email, content);
+
+    switch(data.subType) {
+        case 'USER_WELCOME': 
+                
+            break;
+        case 'TASKER_WELCOME':
+                email.addFilter('templates', 'enable', 1);
+                email.addFilter('templates', 'template_id', WELCOME_TMPL);
+            break;
+
+        case 'ORDER_CONFIRMATION':
+                email.addFilter('templates', 'enable', 1);
+                email.addFilter('templates', 'template_id', TASK_CONFIRM_TMPL);
+            break;
+    }
 
     var request = sg.emptyRequest({
         method: 'POST',

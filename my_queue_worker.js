@@ -36,20 +36,18 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
 
     var mail = new helper.Mail(from_email, subject, to_email, content);
 
-    // switch(data.subType) {
-    //     case 'USER_WELCOME': 
+    switch(data.subType) {
+        case 'USER_WELCOME': 
                 
-    //         break;
-    //     case 'TASKER_WELCOME':
-    //             email.addFilter('templates', 'enable', 1);
-    //             email.addFilter('templates', 'template_id', WELCOME_TMPL);
-    //         break;
+            break;
+        case 'TASKER_WELCOME':
+                mail.setTemplateId(WELCOME_TMPL);
+            break;
 
-    //     case 'ORDER_CONFIRMATION':
-    //             email.addFilter('templates', 'enable', 1);
-    //             email.addFilter('templates', 'template_id', TASK_CONFIRM_TMPL);
-    //         break;
-    // }
+        case 'ORDER_CONFIRMATION':
+                mail.setTemplateId(TASK_CONFIRM_TMPL);
+            break;
+    }
 
     var request = sg.emptyRequest({
         method: 'POST',

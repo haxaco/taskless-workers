@@ -27,7 +27,7 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
     // Read and process task data
     console.log(data);
 
-    var content = new helper.Content('text/plain', JSON.stringify(data));
+    var content = new helper.Content('text/html', JSON.stringify(data));
     
     var from_email = new helper.Email('admin@taskless.com');
     var to_email = new helper.Email(data.recipient);

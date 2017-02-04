@@ -115,9 +115,9 @@ app.post('/stripe', function(request, response) {
       source: token,
     }, function(err, charge) {
         if(err){
-            res.status(500).send(err);
+            response.status(500).send(err);
         } else {
-            res.send(charge);
+            response.send(charge);
         }
       // asynchronously called
     });

@@ -97,12 +97,12 @@ app.get('/', function(request, response) {
 });
 
 app.post('/hook', function(request, response) {
-    console.log('request is ',request);
+    console.log('hook request is ',request.body);
     response.send('OK');
 });
 
 app.post('/stripe', function(request, response) {
-    console.log('request is ',request);
+    console.log('stripe request is ',request.body);
     // Token is created using Stripe.js or Checkout!
     // Get the payment token submitted by the form:
     var token = request.body.stripeToken; // Using Express

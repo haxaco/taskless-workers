@@ -8,6 +8,7 @@ var Queue = require('firebase-queue');
 var admin = require('firebase-admin');
 var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 var helper = require('sendgrid').mail;
+var stripe = require("stripe")("sk_test_3VMJzPEsEw5ty7Ept0G2RPx2");
 //firebase creds
 var serviceAccount = require('./admin-sdk.json');
 
@@ -91,4 +92,26 @@ app.get('/', function(request, response) {
 app.post('/hook', function(request, response) {
     console.log('request is ',request);
     response.send('OK');
+});
+
+app.post('/stripe', function(request, response) {
+
+    // Token is created using Stripe.js or Checkout!
+    // Get the payment token submitted by the form:
+    var token = request.body.stripeToken; // Using Express
+
+    // Charge the user's card:
+    var charge = stripe.charges.create({
+      amount: 1000,
+      currency: "usd",
+      description: "Example charge",
+      source: token,
+    }, function(err, charge) {
+        if(err){
+            res.status(500).send(err);
+        } else {
+            res.send(charge);
+        }
+      // asynchronously called
+    });
 });

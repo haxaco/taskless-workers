@@ -9,6 +9,7 @@ var admin = require('firebase-admin');
 var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 var helper = require('sendgrid').mail;
 var stripe = require("stripe")("sk_test_3VMJzPEsEw5ty7Ept0G2RPx2");
+var bodyParser = require('body-parser');
 //firebase creds
 var serviceAccount = require('./admin-sdk.json');
 
@@ -22,6 +23,9 @@ var ref = admin.database().ref('work-queue');
 //initialize express
 var app     = express();
 app.set('port', (process.env.PORT || 5000));
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(function (req, res, next) {
 
@@ -82,23 +86,7 @@ var queue = new Queue(ref, function(data, progress, resolve, reject) {
 
         resolve();
     });
-
-    // Do some work
-    // progress(50).then(function(result){
-    //     console.log('progress at 50% ',result);
-    // },function(err){
-    //     console.log('bad stuff happened ',err);
-    // });
-
-  // Finish the task asynchronously
-  // setTimeout(function() {
-  //   console.log('finishing task');
-  //   resolve();
-  // }, 10000);
 });
-
-
-
 
 //For avoidong Heroku $PORT error
 app.get('/', function(request, response) {
